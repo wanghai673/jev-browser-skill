@@ -64,6 +64,12 @@ Jev 直接从候选项中做选择，无需逐字生成操作说明。本 Skill 
 
 支持 macOS + Chrome，需要 Python 3.12+ 和 uv。首次配置由 Skill 引导完成。
 
----
+## 致谢
 
-基于 [Jev Ultrafast](https://github.com/browser-use/jev-ultrafast) · [MIT License](LICENSE) · [来源说明](NOTICE)
+- [browser-use/jev-ultrafast](https://github.com/browser-use/jev-ultrafast)：上游浏览器 Agent 运行时。本项目在其基础上适配 Codex Skill，加入预置输入、连续执行、配置自检与结果记录等能力。
+- [TypeSafe / Jev](https://docs.typesafe.ai/)：提供低延迟的结构化决策 API，负责选择浏览器动作与操作目标。
+- [Browser Harness](https://github.com/browser-use/browser-harness)：提供 Chrome 连接与浏览器操作的基础设施。
+
+代码采用 [MIT License](LICENSE)，保留上游版权声明。项目来源与适配说明见 [NOTICE](NOTICE)。
+
+欢迎 Star、提交 Issue，或分享你用 Jev 完成的浏览器任务。
