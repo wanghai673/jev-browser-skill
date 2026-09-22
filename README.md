@@ -14,9 +14,19 @@
 [![Agent Skill](https://img.shields.io/badge/Codex-Agent%20Skill-06b6d4.svg)](skills/jev-browser/SKILL.md)
 [![Checks](https://github.com/wanghai673/jev-browser-skill/actions/workflows/checks.yml/badge.svg)](https://github.com/wanghai673/jev-browser-skill/actions/workflows/checks.yml)
 
-[快速开始](#快速开始) · [为什么快又省](#为什么快又省) · [查看 Skill](skills/jev-browser/SKILL.md)
+[观看演示](#演示) · [快速开始](#快速开始) · [为什么快又省](#为什么快又省) · [查看 Skill](skills/jev-browser/SKILL.md)
 
 </div>
+
+## 演示
+
+**7.1 秒，完成一次航班搜索。** 从苏黎世到伦敦，一句话启动 Google Flights 搜索，自动填写并展示航班结果。
+
+<a href="https://github.com/browser-use/jev-ultrafast/blob/1231850a0bf1a0c0341fe408ef1668dbbfdfac46/docs/demo.mp4"><img src="https://raw.githubusercontent.com/browser-use/jev-ultrafast/1231850a0bf1a0c0341fe408ef1668dbbfdfac46/docs/demo.gif" alt="Jev Ultrafast 在 Google Flights 搜索苏黎世到伦敦航班的实时演示" width="100%" /></a>
+
+[▶ 观看完整视频](https://github.com/browser-use/jev-ultrafast/blob/1231850a0bf1a0c0341fe408ef1668dbbfdfac46/docs/demo.mp4) · [上游演示与计时说明](https://github.com/browser-use/jev-ultrafast/blob/1231850a0bf1a0c0341fe408ef1668dbbfdfac46/docs/performance.md)
+
+<sub>演示来自 Browser Use 的 Jev Ultrafast，按 1× 速度播放。7.1 秒包含模型决策、文本生成与页面加载，不含初始页面准备。</sub>
 
 ## 低延迟、低成本，让网页操作快起来
 
