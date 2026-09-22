@@ -7,7 +7,9 @@ description: Execute browser tasks in the user's Chrome, including navigation, s
 
 ## Configure Jev
 
-When asked to configure the API, handle setup directly through local file tools; do not start a browser task.
+When asked to configure the API, or before the first browser task if configuration is missing, handle setup directly through local file tools. Resume the requested task once setup is ready. For setup-only requests, do not start a browser task.
+
+On first use, check for Python 3.12+, `uv`, and the existing Chrome remote-debugging connection. If Chrome debugging is disabled, guide the user to enable `chrome://inspect/#remote-debugging` and allow its connection prompt; do not restart Chrome. The launcher installs runtime dependencies through `uv`.
 
 - Use `JEV_CONFIG_DIR/.env` when set, otherwise `~/.config/jev-browser/.env`. Inspect only whether `TYPESAFE_API_KEY` and `TYPESAFE_MODEL` are configured; never print existing secrets.
 - Reuse existing configuration unless the user requests a change. For a missing key, ask the user to provide it through a local file or secret input available in their client. If the user already supplied a key for this setup, write it without echoing it; never recover keys from conversation history.
