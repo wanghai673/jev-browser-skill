@@ -64,12 +64,10 @@ Codex 准备好起始网址、任务和搜索词，发起一次调用。Jev 根�
 把下面这句话发给 Codex：
 
 ```text
-使用 $skill-installer 安装这个 Skill：
-https://github.com/wanghai673/jev-browser-skill/tree/main/skills/jev-browser
-只安装该子目录，不要把整个仓库克隆到 skills 目录。
+安装 jev-browser 这个 skill，地址是 https://github.com/wanghai673/jev-browser-skill
 ```
 
-Agent 会将 `skills/jev-browser/` 安装为本地的 `jev-browser` Skill，包含 `SKILL.md`、`agents/` 和运行脚本。仓库首页的 README、展示图片和 GitHub 工作流不会一起安装。如果已安装同名 Skill，请说明要更新并保留本地修改。安装完成后，在下一轮对话中使用。
+可安装的 Skill 位于 `skills/jev-browser/`。安装完成后，在下一轮对话中使用。
 
 ### 2. 让 Agent 配置 Jev API
 
