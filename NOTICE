@@ -1,0 +1,15 @@
+jev-browser-skill
+
+This community skill includes a modified copy of browser-use/jev-ultrafast.
+Upstream: https://github.com/browser-use/jev-ultrafast
+Source checkout base: 1231850a0bf1a0c0341fe408ef1668dbbfdfac46
+Upstream copyright: Copyright (c) 2026 Browser Use
+Upstream license: MIT (retained in LICENSE and scripts/runtime/LICENSE)
+
+Local adaptations include Codex skill packaging, prepared literal inputs,
+task-local continuous execution, browser/profile integration, bounded page
+and navigation evidence, and exclusion of repeated no-progress actions.
+The bundled runtime differs from the upstream commit and is not an official
+release of Browser Use, TypeSafe, or OpenAI.
+
+The README hero is an AI-generated conceptual illustration.

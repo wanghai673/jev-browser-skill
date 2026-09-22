@@ -1,0 +1,6 @@
+interface:
+  display_name: "Jev Browser"
+  short_description: "One-shot browser tasks executed continuously by Jev"
+  default_prompt: "Use $jev-browser to run the complete browser task with candidate field text prepared by Codex; Jev chooses actions and literals until done or unable to continue."
+policy:
+  allow_implicit_invocation: true
