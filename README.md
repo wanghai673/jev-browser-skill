@@ -62,6 +62,16 @@ Jev 直接从候选项中做选择，无需逐字生成操作说明。本 Skill 
 打开 B 站，搜索 machine learning，展示搜索结果。
 ```
 
+也可以在完成配置后，通过 Python 入口直接调用：
+
+```bash
+python3 "${CODEX_HOME:-$HOME/.codex}/skills/jev-browser/scripts/jev.py" run \
+  --url 'https://www.bilibili.com' \
+  --goal 'Search Bilibili for machine learning and show the search results.' \
+  --inputs '[{"value":"machine learning","purpose":"Bilibili search query"}]' \
+  --show
+```
+
 支持 macOS + Chrome，需要 Python 3.12+ 和 uv。首次配置由 Skill 引导完成。
 
 ## 致谢
