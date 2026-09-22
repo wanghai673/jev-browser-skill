@@ -10,7 +10,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-lime.svg)](LICENSE)
 [![Platform: macOS](https://img.shields.io/badge/Platform-macOS-111827.svg)](#使用前准备)
-[![Agent Skill](https://img.shields.io/badge/Codex-Agent%20Skill-06b6d4.svg)](SKILL.md)
+[![Agent Skill](https://img.shields.io/badge/Codex-Agent%20Skill-06b6d4.svg)](skills/jev-browser/SKILL.md)
 [![Checks](https://github.com/wanghai673/jev-browser-skill/actions/workflows/checks.yml/badge.svg)](https://github.com/wanghai673/jev-browser-skill/actions/workflows/checks.yml)
 
 [为什么主打快](#为什么主打快) · [快速开始](#快速开始) · [使用示例](#可以怎么用) · [工作原理](#它怎么工作) · [当前边界](#当前边界)
@@ -59,25 +59,27 @@ Codex 准备好起始网址、任务和搜索词，发起一次调用。Jev 根�
 - **[TypeSafe API Key](https://docs.typesafe.ai/)**：浏览器循环通过 TypeSafe API 调用 Jev，可能产生 API 费用。
 - 在 Chrome 中打开 `chrome://inspect/#remote-debugging`，启用远程调试；若 Chrome 提示允许调试连接，按界面完成授权。
 
-### 1. 安装 Skill
+### 1. 让 Agent 安装 Skill
 
-```bash
-git clone https://github.com/wanghai673/jev-browser-skill.git \
-  "${CODEX_HOME:-$HOME/.codex}/skills/jev-browser"
+把下面这句话发给 Codex：
+
+```text
+使用 $skill-installer 安装这个 Skill：
+https://github.com/wanghai673/jev-browser-skill/tree/main/skills/jev-browser
+只安装该子目录，不要把整个仓库克隆到 skills 目录。
 ```
 
-如果目标目录已有 `jev-browser`，先保留已有版本，再选择一个空目录进行安装，避免覆盖你的本地修改。重新打开 Codex 会话以加载技能。
+Agent 会将 `skills/jev-browser/` 安装为本地的 `jev-browser` Skill，包含 `SKILL.md`、`agents/` 和运行脚本。仓库首页的 README、展示图片和 GitHub 工作流不会一起安装。如果已安装同名 Skill，请说明要更新并保留本地修改。安装完成后，在下一轮对话中使用。
 
-### 2. 配置 Jev
+### 2. 让 Agent 配置 Jev API
 
-在 `~/.config/jev-browser/.env` 中添加以下配置（已有文件请编辑，不要覆盖）：
+继续对 Codex 说：
 
-```dotenv
-TYPESAFE_API_KEY=your_typesafe_api_key
-TYPESAFE_MODEL=jev-latest
+```text
+使用 $jev-browser，帮我配置 Jev API。
 ```
 
-目录不存在时先执行 `mkdir -p ~/.config/jev-browser`。配置值直接填写，不加引号；不要把真实密钥写进任务、截图或 Git 提交。也可以通过环境变量提供以上配置。
+Skill 会引导你提供 API Key，维护本机配置并保留已有设置，默认使用 `jev-latest`。密钥保存在仓库之外，不会在回复中回显。配置完成后会检查运行时能否读取；实际 API 是否可用会在你要求测试或首次执行任务时确认。
 
 ### 3. 开始使用
 
@@ -130,13 +132,13 @@ flowchart LR
     J --> E[校验并执行浏览器动作]
     E --> S
     J -->|完成或无法继续| R[返回页面证据、动作和耗时]
-    R --> V[Codex 核对结果并回复]
+    R --> V[Codex 直接报告结果并停止]
 ```
 
 - **读取**：从页面 DOM 提取文字和控件，给本次观察到的元素编号。默认决策循环不依赖截图。
 - **选择**：把操作和对应目标作为动态选项，在一次 Jev API 请求中提出多个选择问题，只执行被选中操作对应的目标。
 - **执行**：重新检查页面与目标状态；填字使用已提供的原文。Jev 的输出不会被当成 JavaScript 或任意选择器执行。
-- **检查**：携带本次任务的页面和导航证据继续循环。`DONE` 是模型的停止选择，最终是否完成仍需结合证据判断。
+- **停止**：Jev 在本次调用内根据页面和导航证据选择 `DONE` 或返回失败。返回后，Codex 直接报告结果，不再检查页面或二次调用验证、纠正；只有用户明确要求继续、重试或改变任务时，才发起下一次调用。
 
 这里的“运行时只调用 Jev”指浏览器执行循环。外围理解任务和总结结果的 Codex 仍然使用它自己的模型。
 
@@ -174,7 +176,7 @@ flowchart LR
 ## 开发与验证
 
 ```bash
-cd scripts/runtime
+cd skills/jev-browser/scripts/runtime
 uv sync --locked
 uv run pytest -q
 uv run ruff check .

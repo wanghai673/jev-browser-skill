@@ -4,7 +4,7 @@ This community skill includes a modified copy of browser-use/jev-ultrafast.
 Upstream: https://github.com/browser-use/jev-ultrafast
 Source checkout base: 1231850a0bf1a0c0341fe408ef1668dbbfdfac46
 Upstream copyright: Copyright (c) 2026 Browser Use
-Upstream license: MIT (retained in LICENSE and scripts/runtime/LICENSE)
+Upstream license: MIT (retained in LICENSE and skills/jev-browser/scripts/runtime/LICENSE)
 
 Local adaptations include Codex skill packaging, prepared literal inputs,
 task-local continuous execution, browser/profile integration, bounded page

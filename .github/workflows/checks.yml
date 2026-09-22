@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: scripts/runtime
+        working-directory: skills/jev-browser/scripts/runtime
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
