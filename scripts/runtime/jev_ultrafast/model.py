@@ -224,4 +224,3 @@ def choose(state, goal, history):
         "latency_ms": round((time.perf_counter() - started) * 1000),
         "request": body,
     }
-
