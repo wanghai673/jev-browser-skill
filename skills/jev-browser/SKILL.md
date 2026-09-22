@@ -5,17 +5,27 @@ description: Execute browser tasks in the user's Chrome, including navigation, s
 
 # Jev Browser
 
+## Check setup
+
+Before the first browser task in a conversation, after configuration changes, or when asked to check setup, run:
+
+```sh
+python3 <skill-dir>/scripts/jev.py doctor
+```
+
+It makes one small Jev API request with synthetic input and checks Chrome through `Browser.getVersion`; it never reads or changes pages. Report each component's status. If both are ready, proceed with the user's task. Reuse a successful check within the conversation unless a connection/configuration error occurs. Never run this check after a browser result to verify task completion.
+
+Python 3.12+ and `uv` are required; the launcher installs runtime dependencies. For a Chrome failure, guide the user to open `chrome://inspect/#remote-debugging`, enable debugging, and allow the connection prompt. Do not restart Chrome. After the user resolves setup, check again and continue their task.
+
 ## Configure Jev
 
-When asked to configure the API, or before the first browser task if configuration is missing, handle setup directly through local file tools. Resume the requested task once setup is ready. For setup-only requests, do not start a browser task.
-
-On first use, check for Python 3.12+, `uv`, and the existing Chrome remote-debugging connection. If Chrome debugging is disabled, guide the user to enable `chrome://inspect/#remote-debugging` and allow its connection prompt; do not restart Chrome. The launcher installs runtime dependencies through `uv`.
+For a missing API key or an explicit setup request, use local file tools:
 
 - Use `JEV_CONFIG_DIR/.env` when set, otherwise `~/.config/jev-browser/.env`. Inspect only whether `TYPESAFE_API_KEY` and `TYPESAFE_MODEL` are configured; never print existing secrets.
 - Reuse existing configuration unless the user requests a change. For a missing key, ask the user to provide it through a local file or secret input available in their client. If the user already supplied a key for this setup, write it without echoing it; never recover keys from conversation history.
 - Set `TYPESAFE_API_KEY` to the supplied value and default `TYPESAFE_MODEL` to `jev-latest`. Preserve unrelated settings and any existing model unless a change was requested. The file uses literal `KEY=value` lines without quotes; reject embedded newlines in supplied values.
 - Keep the configuration outside the repository, create its directory with mode `700`, and write the file with mode `600`. Do not put keys in command-line arguments, logs, browser inputs, or replies.
-- Verify locally that the runtime loader resolves a nonempty key and the intended model, reporting only configuration status, path, and model. Process environment variables override the file. This check does not establish API validity; make an API request only when the user asks to test it or starts a browser task.
+- Process environment variables override the file. After configuration, run `doctor` to verify API access and Chrome connectivity. Report status, configuration path, and model without exposing secrets. For setup-only requests, stop after reporting the check.
 
 ## Run a browser task
 

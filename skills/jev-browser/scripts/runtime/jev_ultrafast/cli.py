@@ -61,7 +61,7 @@ def deadline(seconds):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Run a fresh Jev browser task until DONE or failure")
-    parser.add_argument("command", choices=["run", "tabs"])
+    parser.add_argument("command", choices=["run", "tabs", "doctor"])
     parser.add_argument("--url", help="Known starting URL; use --target-id for an explicitly selected tab")
     parser.add_argument("--target-id")
     parser.add_argument("--goal", help="The complete user request, including required result evidence")
@@ -80,33 +80,38 @@ def main(argv=None):
         ):
             parser.error("Use 1–1000 actions and 1–3600 seconds")
     try:
-        with execution_lock():
-            configure_browser()
-            if args.command == "tabs":
-                from .browser import cdp, ensure_daemon
+        if args.command == "doctor":
+            from .doctor import run_doctor
 
-                with deadline(30):
-                    ensure_daemon()
-                    tabs = cdp("Target.getTargets")["targetInfos"]
-                result = {
-                    "tabs": [
-                        {"target_id": t["targetId"], "title": t.get("title", ""), "url": t.get("url", "")}
-                        for t in tabs
-                        if t.get("type") == "page"
-                    ]
-                }
-            else:
-                from .runner import run_task
+            result = run_doctor()
+        else:
+            with execution_lock():
+                configure_browser()
+                if args.command == "tabs":
+                    from .browser import cdp, ensure_daemon
 
-                with deadline(args.max_seconds):
-                    result = run_task(
-                        args.url,
-                        args.goal,
-                        target_id=args.target_id,
-                        inputs=json.loads(args.inputs),
-                        show=args.show,
-                        max_actions=args.max_actions,
-                    )
+                    with deadline(30):
+                        ensure_daemon()
+                        tabs = cdp("Target.getTargets")["targetInfos"]
+                    result = {
+                        "tabs": [
+                            {"target_id": t["targetId"], "title": t.get("title", ""), "url": t.get("url", "")}
+                            for t in tabs
+                            if t.get("type") == "page"
+                        ]
+                    }
+                else:
+                    from .runner import run_task
+
+                    with deadline(args.max_seconds):
+                        result = run_task(
+                            args.url,
+                            args.goal,
+                            target_id=args.target_id,
+                            inputs=json.loads(args.inputs),
+                            show=args.show,
+                            max_actions=args.max_actions,
+                        )
         print(json.dumps(result, ensure_ascii=False))
         if result.get("status") == "error":
             raise SystemExit(1)
