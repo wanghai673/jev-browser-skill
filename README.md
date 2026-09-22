@@ -1,6 +1,6 @@
 <div align="center">
 
-![Jev Browser Skill](docs/assets/hero.png)
+![Jev Browser：快速、低成本，让 Codex 高效操作浏览器](docs/assets/hero.png)
 
 # ⚡ Jev Browser Skill
 
@@ -20,16 +20,22 @@
 
 ## 低延迟、低成本，让网页操作快起来
 
-**少等每一步决策，少花每一次调用。** Codex 理解目标、准备任务，Jev 以低延迟完成动作选择，连续推进网页操作，减少主模型逐步介入带来的等待与开销。
+Codex 直接操作浏览器时，由所选主模型逐步决策；接入 Jev 后，Codex 负责理解目标、准备任务，把连续点击与选择交给 Jev。
 
-| ⚡ 低延迟 | 💰 低输入价格 | 🎁 输出免费 |
-| :---: | :---: | :---: |
-| **70–500 ms** | **$0.042 / 百万 token** | **$0** |
-| 官方报告的模型请求延迟 | Jev 输入 token 单价 | Jev 输出 token 费用 |
+**⚡ Jev 官方报告的模型请求延迟为 70–500 ms。** 本项目把动作和目标放在一次请求中选择，并让 Jev 连续执行，减少每一步的模型等待与交接。
 
-按每次请求计费 **1 万输入 token** 估算，**100 次 Jev 决策约 $0.042**。
+### 与 Codex 可选模型的 API 单价对比
 
-<sub>数据来源：[TypeSafe 官方](https://typesafe.ai/blog/introducing-system-one-models-and-jev)，核对于 2026-09-22。上述为模型延迟和 Jev API 费用；完整任务还包括网页加载、重试及 Codex 自身的耗时与费用。</sub>
+| 决策模型 | 输入 / 百万 token | 输出 / 百万 token | 输入单价相对 Jev |
+| --- | ---: | ---: | ---: |
+| **Jev** | **$0.042** | **免费** | **1×** |
+| [GPT-5.6 Terra](https://developers.openai.com/api/docs/models/gpt-5.6-terra) | $2.00 | $12.00 | 47.6× |
+| [GPT-5.6 Sol](https://developers.openai.com/api/docs/models/gpt-5.6-sol) | $4.00 | $20.00 | 95.2× |
+| [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) | $10.00 | $50.00 | 238.1× |
+
+同样计费 **10 万输入 token**，Jev 为 **$0.0042**；上表三款模型分别为 **$0.20 / $0.40 / $1.00**，另计输出费用。高频网页决策交给 Jev，Codex 保留对任务的理解与结果回复。
+
+<sub>核对于 2026-09-22；Jev 数据来自 [TypeSafe 官方](https://typesafe.ai/blog/introducing-system-one-models-and-jev)，OpenAI 价格见表中模型链接。比较采用标准、未缓存、短上下文 API 单价，不代表 Codex 订阅扣费或完整任务的成本倍数。模型 token 用量可能不同，任务总开销还包括 Codex、网页加载与重试；本项目尚未发布与 Codex 直接操作浏览器的同任务耗时对照。</sub>
 
 ## 为什么快又省
 
